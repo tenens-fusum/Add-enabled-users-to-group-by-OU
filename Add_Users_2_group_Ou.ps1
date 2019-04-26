@@ -1,7 +1,7 @@
 
 ############################################################################
 #
-#  GIT:             https://github.com/tenens-fusum/Add-enabled-users-to-group-by-OU
+#  GIT:                 https://github.com/tenens-fusum/Add-enabled-users-to-group-by-OU
 #  Date created:   	23/03/2019
 #  Version: 		1.0
 #  Description: 	Add enabled users to Group by OU, update membership whithout delete and add all of them
