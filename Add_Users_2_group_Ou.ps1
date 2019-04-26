@@ -1,16 +1,17 @@
 
-############################################################################
+########################################################################################################################################################
 #
 #  GIT:                 https://github.com/tenens-fusum/Add-enabled-users-to-group-by-OU
 #  Date created:   	23/03/2019
 #  Version: 		1.0
 #  Description: 	Add enabled users to Group by OU, update membership whithout delete and add all of them
+#  Why: 	        Monitoring tools get clogged with incorrect script data. Removing and adding only necessary users allows for improved user experience and security. 
 #
-############################################################################
+########################################################################################################################################################
 
 #Options
 $group='AD_Group'                                       #AD group where users are added
-$OU="ou=orgs,dc=corp,dc=psg,dc=loc"                     #AD OU from which users will be addedd
+$OU="ou=ou,dc=domain,dc=loc"                            #AD OU from which users will be addedd
 
 $groupDN=(get-adgroup $group).DistinguishedName  
 $users=get-ADGroupMember -Identity $group
