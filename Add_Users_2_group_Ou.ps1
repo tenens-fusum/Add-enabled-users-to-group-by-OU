@@ -3,7 +3,7 @@
 #
 #  GIT:                 https://github.com/tenens-fusum/Add-enabled-users-to-group-by-OU
 #  Date created:   	23/03/2019
-#  Version: 		1.0
+#  Version: 		1.1
 #  Description: 	Add enabled users to Group by OU, update membership whithout delete and add all of them
 #  Why: 	        Monitoring tools get clogged with incorrect script data. Removing and adding only necessary users allows for improved user experience and security. 
 #
@@ -15,6 +15,8 @@ $OU="ou=ou,dc=domain,dc=loc"                            #AD OU from which users 
 
 $groupDN=(get-adgroup $group).DistinguishedName  
 $users=get-ADGroupMember -Identity $group
+#########Test Users##############
+$TestUserSID = (Get-ADUser TESTUSERNAME).SID
 
 foreach ($user in $users)
 {
@@ -30,13 +32,19 @@ foreach ($user in $users)
              Remove-ADGroupMember -Identity $group -Member $user.samaccountname -Confirm:$false
              Write-Host ""$user.SamAccountName" Deleted from $group. Not in $OU" -ForegroundColor Green
          }
+           
+        if($user.SID -eq $TestUserSID)
+         {
+             Remove-ADGroupMember -Identity $group -Member $user.samaccountname -Confirm:$false
+             Write-Host ""$user.SamAccountName" Deleted from $group. Test User" -ForegroundColor Green
+         }
 }
 $users=@()
 
 $users=Get-ADUser -SearchBase $OU -Filter {(Enabled -eq $true)}    
 foreach ($user in $users) 
 {   
-   if   ((Get-ADUser $user -Properties memberof).memberof -like $groupDN )
+   if   (((Get-ADUser $user -Properties memberof).memberof -like $groupDN ) -or ($user.sid -eq $TestUserSID))
 {
 #Write-Host ""$user.SamAccountName" is already in $group" -ForegroundColor Green
 }
