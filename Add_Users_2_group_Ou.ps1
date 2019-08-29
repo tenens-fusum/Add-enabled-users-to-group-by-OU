@@ -16,7 +16,7 @@ $OU="ou=ou,dc=domain,dc=loc"                            #AD OU from which users 
 $groupDN=(get-adgroup $group).DistinguishedName  
 $users=get-ADGroupMember -Identity $group
 #########Test Users##############
-$TestUserSID = (Get-ADUser TESTUSERNAME).SID
+$TestUserSID = (Get-ADUser TESTUSERNAME).SID           #If you want leave user in AD group and move to another OU, you can add his acc here
 
 foreach ($user in $users)
 {
